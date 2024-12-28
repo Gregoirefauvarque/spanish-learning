@@ -3,112 +3,120 @@
     "dutch": "ik",
     "spanish": "yo",
     "date": "2024-12-28",
-    "practiced": false
+    "practiced": true
   },
   {
     "dutch": "jij inf",
     "spanish": "tu",
     "date": "2024-12-28",
-    "practiced": false
+    "practiced": true
   },
   {
     "dutch": "hij",
     "spanish": "el",
     "date": "2024-12-28",
-    "practiced": false
+    "practiced": true
   },
   {
     "dutch": "zij enk v",
     "spanish": "ella",
     "date": "2024-12-28",
-    "practiced": false
+    "practiced": true
   },
   {
     "dutch": "u enkl for",
     "spanish": "usted",
     "date": "2024-12-28",
-    "practiced": false
+    "practiced": true
   },
   {
     "dutch": "wij m",
     "spanish": "nosotros",
     "date": "2024-12-28",
-    "practiced": false
+    "practiced": true
   },
   {
     "dutch": "wij v",
     "spanish": "nosotras",
     "date": "2024-12-28",
-    "practiced": false
+    "practiced": true
   },
   {
     "dutch": "jullie v inf",
     "spanish": "vosotras",
     "date": "2024-12-28",
-    "practiced": false
+    "practiced": true
   },
   {
     "dutch": "jullie m inf",
     "spanish": "vosotros",
     "date": "2024-12-28",
-    "practiced": false
+    "practiced": true
   },
   {
     "dutch": "jullie form",
     "spanish": "ustedes",
     "date": "2024-12-28",
-    "practiced": false
+    "practiced": true
   },
   {
     "dutch": "zij m mv",
     "spanish": "ellos",
     "date": "2024-12-28",
-    "practiced": false
+    "practiced": true
   },
   {
     "dutch": "zij v mv",
     "spanish": "ellas",
     "date": "2024-12-28",
-    "practiced": false
+    "practiced": true
   },
   {
     "dutch": "Dag!",
     "spanish": "Hola",
-    "date": "2024-12-28"
+    "date": "2024-12-28",
+    "practiced": true
   },
   {
     "dutch": "Goedemorgen",
     "spanish": "buenos dias",
-    "date": "2024-12-28"
+    "date": "2024-12-28",
+    "practiced": true
   },
   {
     "dutch": "Goedemiddag",
     "spanish": "buenas tardes",
-    "date": "2024-12-28"
+    "date": "2024-12-28",
+    "practiced": true
   },
   {
     "dutch": "Goedenavond",
     "spanish": "buenas noches",
-    "date": "2024-12-28"
+    "date": "2024-12-28",
+    "practiced": true
   },
   {
     "dutch": "Dag zeggen",
     "spanish": "Decir hola",
-    "date": "2024-12-28"
+    "date": "2024-12-28",
+    "practiced": true
   },
   {
     "dutch": "Groeten (het)",
     "spanish": "saludo(m)",
-    "date": "2024-12-28"
+    "date": "2024-12-28",
+    "practiced": true
   },
   {
     "dutch": "Verwelkomen",
     "spanish": "saludar",
-    "date": "2024-12-28"
+    "date": "2024-12-28",
+    "practiced": true
   },
   {
     "dutch": "Hoe gaat het?",
     "spanish": "Como estas?",
-    "date": "2024-12-28"
+    "date": "2024-12-28",
+    "practiced": true
   }
 ]
