@@ -1,11 +1,51 @@
 <!DOCTYPE html>
 <html>
-<!-- ... (vorige head sectie blijft hetzelfde) ... -->
 <head>
     <title>Spaanse Woordenschat</title>
     <meta charset="UTF-8">
     <style>
-        /* ... (vorige styles blijven hetzelfde) ... */
+        body {
+            font-family: Arial;
+            margin: 40px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
+            background-color: #0052a3;
+        }
+        .hidden {
+            display: none;
+        }
+        .stats {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
         .word-table {
             width: 100%;
             border-collapse: collapse;
@@ -19,37 +59,45 @@
         .word-table th {
             background-color: #f5f5f5;
         }
-        .button-group {
-            display: flex;
-            gap: 10px;
+        .manage-button {
+            margin-top: 20px;
+            background-color: #5cb85c;
         }
-        .button-group button {
-            width: auto;
-        }
-        .edit-button {
-            background-color: #28a745;
-        }
-        .delete-button {
-            background-color: #dc3545;
-        }
-        .nav-buttons {
-            margin-bottom: 20px;
-        }
-        .nav-buttons button {
-            width: auto;
-            margin-right: 10px;
+        .nav-button {
+            background-color: #6c757d;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- ... (vorige HTML blijft hetzelfde tot aan de stats div) ... -->
+        <h1>Spaanse Woordenschat Trainer</h1>
         
+        <div id="settings">
+            <h2>GitHub Instellingen</h2>
+            <input type="text" id="username" placeholder="GitHub gebruikersnaam">
+            <input type="text" id="repo" placeholder="Repository naam">
+            <input type="password" id="token" placeholder="GitHub token">
+            <button onclick="saveSettings()">Opslaan</button>
+        </div>
+
+        <div id="wordInput" class="hidden">
+            <h2>Nieuwe woorden toevoegen</h2>
+            <input type="text" id="dutchWord" placeholder="Nederlands woord">
+            <input type="text" id="spanishWord" placeholder="Spaans woord">
+            <button onclick="addWord()">Toevoegen (<span id="wordCount">0</span>/10)</button>
+            <button onclick="startPractice()" id="practiceButton" disabled>Start oefening</button>
+            <button onclick="showManagement()" class="manage-button">Beheer woorden</button>
+            
+            <div class="stats">
+                <h3>Statistieken</h3>
+                <p>Totaal aantal woorden: <span id="totalWords">0</span></p>
+                <p>Woorden vandaag: <span id="todayWords">0</span></p>
+            </div>
+        </div>
+
         <div id="wordManagement" class="hidden">
             <h2>Woordenlijst Beheer</h2>
-            <div class="nav-buttons">
-                <button onclick="showInputScreen()">Terug naar invoer</button>
-            </div>
+            <button onclick="showInputScreen()" class="nav-button">Terug naar invoer</button>
             <table class="word-table">
                 <thead>
                     <tr>
@@ -59,83 +107,41 @@
                         <th>Acties</th>
                     </tr>
                 </thead>
-                <tbody id="wordTableBody">
-                    <!-- Wordt gevuld via JavaScript -->
-                </tbody>
+                <tbody id="wordTableBody"></tbody>
             </table>
         </div>
 
-        <!-- Voeg een "Beheer woorden" knop toe aan het wordInput scherm -->
-        <div class="nav-buttons" id="manageButton">
-            <button onclick="showManagement()">Beheer woorden</button>
+        <div id="practiceSection" class="hidden">
+            <h2>Oefenen</h2>
+            <p id="dutchPrompt" style="font-size: 1.2em; font-weight: bold;"></p>
+            <input type="text" id="answer" placeholder="Spaans woord">
+            <button onclick="checkAnswer()">Controleer</button>
+            <p id="feedback"></p>
+            <p id="progress" class="status"></p>
         </div>
+
+        <p id="status" class="status"></p>
     </div>
 
     <script>
-        // ... (vorige JavaScript blijft hetzelfde) ...
+        // ... (Bestaande JavaScript functies blijven hetzelfde) ...
 
-        // Voeg deze nieuwe functies toe:
+        // Update de showManagement functie
         function showManagement() {
             document.getElementById('wordInput').classList.add('hidden');
+            document.getElementById('practiceSection').classList.add('hidden');
             document.getElementById('wordManagement').classList.remove('hidden');
             refreshWordTable();
         }
 
         function showInputScreen() {
             document.getElementById('wordManagement').classList.add('hidden');
+            document.getElementById('practiceSection').classList.add('hidden');
             document.getElementById('wordInput').classList.remove('hidden');
         }
 
-        function refreshWordTable() {
-            const tableBody = document.getElementById('wordTableBody');
-            tableBody.innerHTML = '';
-
-            // Sorteer woorden op datum (nieuwste eerst)
-            const sortedWords = [...allWords].sort((a, b) => b.date.localeCompare(a.date));
-
-            sortedWords.forEach((word, index) => {
-                const row = tableBody.insertRow();
-                row.innerHTML = `
-                    <td>${word.date}</td>
-                    <td><span id="dutch_${index}">${word.dutch}</span></td>
-                    <td><span id="spanish_${index}">${word.spanish}</span></td>
-                    <td>
-                        <div class="button-group">
-                            <button onclick="editWord(${index})" class="edit-button">Bewerk</button>
-                            <button onclick="deleteWord(${index})" class="delete-button">Verwijder</button>
-                        </div>
-                    </td>
-                `;
-            });
-        }
-
-        async function editWord(index) {
-            const word = allWords[index];
-            const newDutch = prompt('Nederlands woord:', word.dutch);
-            const newSpanish = prompt('Spaans woord:', word.spanish);
-
-            if (newDutch && newSpanish) {
-                word.dutch = newDutch;
-                word.spanish = newSpanish;
-                await saveToGitHub(allWords);
-                refreshWordTable();
-            }
-        }
-
-        async function deleteWord(index) {
-            if (confirm('Weet u zeker dat u dit woord wilt verwijderen?')) {
-                allWords.splice(index, 1);
-                await saveToGitHub(allWords);
-                refreshWordTable();
-                updateStats();
-            }
-        }
-
-        // Voeg deze regel toe aan de saveSettings functie
-        document.getElementById('manageButton').classList.remove('hidden');
-
-        // Voeg deze regel toe aan het einde van het script
-        document.getElementById('manageButton').classList.add('hidden');
+        // Voeg de rest van de JavaScript code hier toe
+        [... REST VAN DE JAVASCRIPT CODE VAN DE VORIGE VERSIE ...]
     </script>
 </body>
 </html>
