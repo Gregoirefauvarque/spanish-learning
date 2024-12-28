@@ -262,40 +262,31 @@
         }
 
         async function addWord() {
-            const dutch = document.getElementById('dutchWord').value.trim();
-            const spanish = document.getElementById('spanishWord').value.trim();
-            
-            if (dutch && spanish) {
-                const currentSessionWords = allWords.filter(w => !w.practiced);
+    const dutch = document.getElementById('dutchWord').value.trim();
+    const spanish = document.getElementById('spanishWord').value.trim();
+    
+    if (dutch && spanish) {
+        allWords.push({
+            dutch,
+            spanish,
+            date: new Date().toISOString().split('T')[0]
+        });
+        
+        await saveToGitHub(allWords);
+        document.getElementById('dutchWord').value = '';
+        document.getElementById('spanishWord').value = '';
+        updateStats();
+    } else {
+        showError('Vul beide woorden in');
+    }
+}
 
-                if (currentSessionWords.length < 10) {
-                    allWords.push({
-                        dutch,
-                        spanish,
-                        date: new Date().toISOString().split('T')[0],
-                        practiced: false
-                    });
-                    
-                    await saveToGitHub(allWords);
-                    document.getElementById('dutchWord').value = '';
-                    document.getElementById('spanishWord').value = '';
-                    updateStats();
-                } else {
-                    showError('Je hebt al 10 woorden toegevoegd voor deze sessie! Start een oefening om meer toe te voegen.');
-                }
-            } else {
-                showError('Vul beide woorden in');
-            }
-        }
-
-        function updateStats() {
-            const currentSessionWords = allWords.filter(w => !w.practiced);
-            
-            document.getElementById('totalWords').textContent = allWords.length;
-            document.getElementById('todayWords').textContent = currentSessionWords.length;
-            document.getElementById('wordCount').textContent = currentSessionWords.length;
-            document.getElementById('practiceButton').disabled = currentSessionWords.length < 10;
-        }
+function updateStats() {
+    document.getElementById('totalWords').textContent = allWords.length;
+    document.getElementById('todayWords').textContent = allWords.length;
+    document.getElementById('wordCount').textContent = allWords.length;
+    document.getElementById('practiceButton').disabled = allWords.length < 10;
+}
 
         function startPractice() {
             const unpracticedWords = allWords.filter(w => !w.practiced);
