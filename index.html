@@ -7,36 +7,171 @@
         body {
             font-family: Arial;
             margin: 40px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
         }
         input, button {
-            margin: 10px;
-            padding: 5px;
+            margin: 10px 0;
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0052a3;
+        }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <h1>Spaanse Woordenschat Trainer</h1>
-    
-    <div id="settings">
-        <h2>GitHub Instellingen</h2>
-        <input type="text" id="username" placeholder="GitHub gebruikersnaam"><br>
-        <input type="text" id="repo" placeholder="Repository naam"><br>
-        <input type="password" id="token" placeholder="GitHub token"><br>
-        <button onclick="saveSettings()">Opslaan</button>
+    <div class="container">
+        <h1>Spaanse Woordenschat Trainer</h1>
+        
+        <div id="settings">
+            <h2>GitHub Instellingen</h2>
+            <input type="text" id="username" placeholder="GitHub gebruikersnaam">
+            <input type="text" id="repo" placeholder="Repository naam">
+            <input type="password" id="token" placeholder="GitHub token">
+            <button onclick="saveSettings()">Opslaan</button>
+        </div>
+
+        <div id="wordInput" class="hidden">
+            <h2>Nieuwe woorden toevoegen</h2>
+            <input type="text" id="dutchWord" placeholder="Nederlands woord">
+            <input type="text" id="spanishWord" placeholder="Spaans woord">
+            <button onclick="addWord()">Toevoegen (<span id="wordCount">0</span>/10)</button>
+            <button onclick="startPractice()" id="practiceButton" disabled>Start oefening</button>
+        </div>
+
+        <div id="practiceSection" class="hidden">
+            <h2>Oefenen</h2>
+            <p id="dutchPrompt"></p>
+            <input type="text" id="answer" placeholder="Spaans woord">
+            <button onclick="checkAnswer()">Controleer</button>
+            <p id="feedback"></p>
+        </div>
     </div>
 
     <script>
+        let wordList = [];
+        let currentIndex = 0;
+
         function saveSettings() {
-            var username = document.getElementById('username').value;
-            var repo = document.getElementById('repo').value;
-            var token = document.getElementById('token').value;
+            const username = document.getElementById('username').value;
+            const repo = document.getElementById('repo').value;
+            const token = document.getElementById('token').value;
             
             if (username && repo && token) {
+                // Sla instellingen op in localStorage
+                localStorage.setItem('githubConfig', JSON.stringify({
+                    username, repo, token
+                }));
+                
+                // Verberg instellingen en toon woord invoer
+                document.getElementById('settings').classList.add('hidden');
+                document.getElementById('wordInput').classList.remove('hidden');
                 alert('Instellingen opgeslagen!');
-                // Hier kunnen we later de GitHub-integratie toevoegen
             } else {
                 alert('Vul alle velden in.');
             }
+        }
+
+        function addWord() {
+            const dutch = document.getElementById('dutchWord').value.trim();
+            const spanish = document.getElementById('spanishWord').value.trim();
+            
+            if (dutch && spanish) {
+                if (wordList.length < 10) {
+                    wordList.push({ dutch, spanish });
+                    document.getElementById('dutchWord').value = '';
+                    document.getElementById('spanishWord').value = '';
+                    updateWordCount();
+                } else {
+                    alert('Je hebt al 10 woorden toegevoegd voor vandaag!');
+                }
+            } else {
+                alert('Vul beide woorden in.');
+            }
+        }
+
+        function updateWordCount() {
+            const count = wordList.length;
+            document.getElementById('wordCount').textContent = count;
+            document.getElementById('practiceButton').disabled = count < 10;
+        }
+
+        function startPractice() {
+            // Verberg woord invoer en toon oefensectie
+            document.getElementById('wordInput').classList.add('hidden');
+            document.getElementById('practiceSection').classList.remove('hidden');
+            currentIndex = 0;
+            shuffleWords();
+            showNextWord();
+        }
+
+        function shuffleWords() {
+            for (let i = wordList.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [wordList[i], wordList[j]] = [wordList[j], wordList[i]];
+            }
+        }
+
+        function showNextWord() {
+            if (currentIndex < wordList.length) {
+                document.getElementById('dutchPrompt').textContent = 
+                    wordList[currentIndex].dutch;
+                document.getElementById('answer').value = '';
+                document.getElementById('feedback').textContent = '';
+            } else {
+                alert('Oefening voltooid!');
+                document.getElementById('practiceSection').classList.add('hidden');
+                document.getElementById('wordInput').classList.remove('hidden');
+                wordList = [];
+                updateWordCount();
+            }
+        }
+
+        function checkAnswer() {
+            const answer = document.getElementById('answer').value.trim().toLowerCase();
+            const correct = wordList[currentIndex].spanish.toLowerCase();
+            const feedback = document.getElementById('feedback');
+            
+            if (answer === correct) {
+                feedback.textContent = 'Correct!';
+                feedback.style.color = 'green';
+            } else {
+                feedback.textContent = `Niet correct. Het juiste antwoord is: ${wordList[currentIndex].spanish}`;
+                feedback.style.color = 'red';
+            }
+            
+            setTimeout(() => {
+                currentIndex++;
+                showNextWord();
+            }, 2000);
+        }
+
+        // Laad opgeslagen instellingen bij opstarten
+        const savedConfig = localStorage.getItem('githubConfig');
+        if (savedConfig) {
+            const config = JSON.parse(savedConfig);
+            document.getElementById('username').value = config.username;
+            document.getElementById('repo').value = config.repo;
+            document.getElementById('token').value = config.token;
         }
     </script>
 </body>
