@@ -122,7 +122,7 @@
             <div class="stats">
                 <h3>Statistieken</h3>
                 <p>Totaal aantal woorden: <span id="totalWords">0</span></p>
-                <p>Woorden vandaag: <span id="todayWords">0</span></p>
+                <p>Nieuwe woorden deze sessie: <span id="todayWords">0</span></p>
             </div>
         </div>
 
@@ -152,6 +152,7 @@
                         <th>Datum</th>
                         <th>Nederlands</th>
                         <th>Spaans</th>
+                        <th>Status</th>
                         <th>Acties</th>
                     </tr>
                 </thead>
@@ -191,6 +192,8 @@
                 localStorage.setItem('githubConfig', JSON.stringify(githubConfig));
 
                 allWords = await loadFromGitHub();
+                // Reset practiced status for all words at start of new session
+                allWords.forEach(word => word.practiced = false);
                 updateStats();
 
                 document.getElementById('settings').classList.add('hidden');
@@ -263,14 +266,14 @@
             const spanish = document.getElementById('spanishWord').value.trim();
             
             if (dutch && spanish) {
-                const today = new Date().toISOString().split('T')[0];
-                const todayWords = allWords.filter(w => w.date === today);
+                const currentSessionWords = allWords.filter(w => !w.practiced);
 
-                if (todayWords.length < 10) {
+                if (currentSessionWords.length < 10) {
                     allWords.push({
                         dutch,
                         spanish,
-                        date: today
+                        date: new Date().toISOString().split('T')[0],
+                        practiced: false
                     });
                     
                     await saveToGitHub(allWords);
@@ -278,7 +281,7 @@
                     document.getElementById('spanishWord').value = '';
                     updateStats();
                 } else {
-                    showError('Je hebt al 10 woorden toegevoegd voor vandaag!');
+                    showError('Je hebt al 10 woorden toegevoegd voor deze sessie! Start een oefening om meer toe te voegen.');
                 }
             } else {
                 showError('Vul beide woorden in');
@@ -286,30 +289,33 @@
         }
 
         function updateStats() {
-            const today = new Date().toISOString().split('T')[0];
-            const todayWords = allWords.filter(w => w.date === today);
+            const currentSessionWords = allWords.filter(w => !w.practiced);
             
             document.getElementById('totalWords').textContent = allWords.length;
-            document.getElementById('todayWords').textContent = todayWords.length;
-            document.getElementById('wordCount').textContent = todayWords.length;
-            document.getElementById('practiceButton').disabled = todayWords.length < 10;
+            document.getElementById('todayWords').textContent = currentSessionWords.length;
+            document.getElementById('wordCount').textContent = currentSessionWords.length;
+            document.getElementById('practiceButton').disabled = currentSessionWords.length < 10;
         }
 
         function startPractice() {
-            const today = new Date().toISOString().split('T')[0];
-            const todayWords = allWords.filter(w => w.date === today);
-            const oldWords = allWords.filter(w => w.date !== today);
+            const unpracticedWords = allWords.filter(w => !w.practiced);
+            const practicedWords = allWords.filter(w => w.practiced);
             
             practiceWords = [
-                ...todayWords,
-                ...oldWords.sort(() => Math.random() - 0.5).slice(0, 5)
+                ...unpracticedWords,
+                ...practicedWords.sort(() => Math.random() - 0.5).slice(0, 5)
             ].sort(() => Math.random() - 0.5);
             
-            currentPracticeIndex = 0;
+            // Markeer de nieuwe woorden als geoefend
+            unpracticedWords.forEach(word => {
+                word.practiced = true;
+            });
+            saveToGitHub(allWords); // Sla de nieuwe status op
             
+            currentPracticeIndex = 0;
             document.getElementById('wordInput').classList.add('hidden');
             document.getElementById('practiceSection').classList.remove('hidden');
-            
+            document.getElementById('answer').focus();
             showNextWord();
         }
 
@@ -373,6 +379,7 @@
                     <td>${word.date}</td>
                     <td>${word.dutch}</td>
                     <td>${word.spanish}</td>
+                    <td>${word.practiced ? 'Geoefend' : 'Nieuw'}</td>
                     <td>
                         <button onclick="editWord(${index})" style="width: auto; margin-right: 5px;">Bewerk</button>
                         <button onclick="deleteWord(${index})" style="width: auto; background-color: #dc3545;">Verwijder</button>
