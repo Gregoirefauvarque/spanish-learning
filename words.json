@@ -62,11 +62,18 @@
   {
     "dutch": "zij m mv",
     "spanish": "ellos",
-    "date": "2024-12-28"
+    "date": "2024-12-28",
+    "practiced": false
   },
   {
     "dutch": "zij v mv",
     "spanish": "ellas",
+    "date": "2024-12-28",
+    "practiced": false
+  },
+  {
+    "dutch": "Dag!",
+    "spanish": "Hola",
     "date": "2024-12-28"
   }
 ]
