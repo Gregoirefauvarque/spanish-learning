@@ -288,27 +288,27 @@ function updateStats() {
     document.getElementById('practiceButton').disabled = allWords.length < 10;
 }
 
-        function startPractice() {
-            const unpracticedWords = allWords.filter(w => !w.practiced);
-            const practicedWords = allWords.filter(w => w.practiced);
-            
-            practiceWords = [
-                ...unpracticedWords,
-                ...practicedWords.sort(() => Math.random() - 0.5).slice(0, 5)
-            ].sort(() => Math.random() - 0.5);
-            
-            // Markeer de nieuwe woorden als geoefend
-            unpracticedWords.forEach(word => {
-                word.practiced = true;
-            });
-            saveToGitHub(allWords); // Sla de nieuwe status op
-            
-            currentPracticeIndex = 0;
-            document.getElementById('wordInput').classList.add('hidden');
-            document.getElementById('practiceSection').classList.remove('hidden');
-            document.getElementById('answer').focus();
-            showNextWord();
-        }
+function startPractice() {
+    const recentWords = allWords.slice(-10);
+    const previousWords = allWords.filter(word => !recentWords.includes(word));
+    
+    practiceWords = [
+        ...recentWords,
+        ...previousWords.sort(() => Math.random() - 0.5).slice(0, 5)
+    ];
+    
+    // Markeer de woorden als geoefend
+    practiceWords.forEach(word => {
+        word.practiced = true;
+    });
+    saveToGitHub(allWords); // Sla de nieuwe status op
+    
+    currentPracticeIndex = 0;
+    document.getElementById('wordInput').classList.add('hidden');
+    document.getElementById('practiceSection').classList.remove('hidden');
+    document.getElementById('answer').focus();
+    showNextWord();
+}
 
         function showNextWord() {
             if (currentPracticeIndex < practiceWords.length) {
