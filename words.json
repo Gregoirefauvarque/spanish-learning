@@ -15,7 +15,7 @@
     "dutch": "hij",
     "spanish": "el",
     "date": "2024-12-28",
-    "practiced": true
+    "practiced": false
   },
   {
     "dutch": "zij enk v",
@@ -33,13 +33,13 @@
     "dutch": "wij m",
     "spanish": "nosotros",
     "date": "2024-12-28",
-    "practiced": true
+    "practiced": false
   },
   {
     "dutch": "wij v",
     "spanish": "nosotras",
     "date": "2024-12-28",
-    "practiced": true
+    "practiced": false
   },
   {
     "dutch": "jullie v inf",
@@ -51,13 +51,13 @@
     "dutch": "jullie m inf",
     "spanish": "vosotros",
     "date": "2024-12-28",
-    "practiced": true
+    "practiced": false
   },
   {
     "dutch": "jullie form",
     "spanish": "ustedes",
     "date": "2024-12-28",
-    "practiced": true
+    "practiced": false
   },
   {
     "dutch": "zij m mv",
