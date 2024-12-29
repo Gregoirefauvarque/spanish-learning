@@ -160,7 +160,7 @@
             </table>
         </div>
     </div>
-<script>
+    <script>
         let githubConfig = {};
         let allWords = [];
         let practiceWords = [];
@@ -287,7 +287,7 @@ function updateStats() {
     document.getElementById('wordCount').textContent = allWords.length;
     document.getElementById('practiceButton').disabled = allWords.length < 10;
 }
-```
+
         function startPractice() {
             const unpracticedWords = allWords.filter(w => !w.practiced);
             const practicedWords = allWords.filter(w => w.practiced);
