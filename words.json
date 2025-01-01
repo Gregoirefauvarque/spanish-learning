@@ -3,13 +3,13 @@
     "dutch": "ik",
     "spanish": "yo",
     "date": "2024-12-28",
-    "practiced": true
+    "practiced": false
   },
   {
     "dutch": "jij inf",
     "spanish": "tu",
     "date": "2024-12-28",
-    "practiced": true
+    "practiced": false
   },
   {
     "dutch": "hij",
@@ -63,7 +63,7 @@
     "dutch": "zij m mv",
     "spanish": "ellos",
     "date": "2024-12-28",
-    "practiced": true
+    "practiced": false
   },
   {
     "dutch": "zij v mv",
@@ -75,13 +75,13 @@
     "dutch": "Dag!",
     "spanish": "Hola",
     "date": "2024-12-28",
-    "practiced": true
+    "practiced": false
   },
   {
     "dutch": "Goedemorgen",
     "spanish": "buenos dias",
     "date": "2024-12-28",
-    "practiced": true
+    "practiced": false
   },
   {
     "dutch": "Goedemiddag",
@@ -93,80 +93,90 @@
     "dutch": "Goedenavond",
     "spanish": "buenas noches",
     "date": "2024-12-28",
-    "practiced": true
+    "practiced": false
   },
   {
     "dutch": "Dag zeggen",
     "spanish": "Decir hola",
     "date": "2024-12-28",
-    "practiced": true
+    "practiced": false
   },
   {
     "dutch": "Groeten (het)",
     "spanish": "saludo(m)",
     "date": "2024-12-28",
-    "practiced": true
+    "practiced": false
   },
   {
     "dutch": "Verwelkomen",
     "spanish": "saludar",
     "date": "2024-12-28",
-    "practiced": true
+    "practiced": false
   },
   {
     "dutch": "Hoe gaat het?",
     "spanish": "Como estas?",
     "date": "2024-12-28",
-    "practiced": true
+    "practiced": false
   },
   {
     "dutch": "is er nog nieuws?",
     "spanish": "que hay de nuevo?",
-    "date": "2024-12-29"
+    "date": "2024-12-29",
+    "practiced": true
   },
   {
     "dutch": "tot snel!",
     "spanish": "hasta pronto!",
-    "date": "2024-12-29"
+    "date": "2024-12-29",
+    "practiced": true
   },
   {
     "dutch": "vaarwel",
     "spanish": "adios",
-    "date": "2024-12-29"
+    "date": "2024-12-29",
+    "practiced": true
   },
   {
     "dutch": "afscheid nemen",
     "spanish": "despedirse",
-    "date": "2024-12-29"
+    "date": "2024-12-29",
+    "practiced": true
   },
   {
     "dutch": "tot kijk!",
     "spanish": "hasta luego!",
-    "date": "2024-12-29"
+    "date": "2024-12-29",
+    "practiced": true
   },
   {
     "dutch": "dank u!",
     "spanish": "gracias!",
-    "date": "2024-12-29"
+    "date": "2024-12-29",
+    "practiced": true
   },
   {
     "dutch": "dank u wel!",
     "spanish": "muchas gracias!",
-    "date": "2024-12-29"
+    "date": "2024-12-29",
+    "practiced": true
   },
   {
     "dutch": "graag gedaan",
     "spanish": "de nada",
-    "date": "2024-12-29"
+    "date": "2024-12-29",
+    "practiced": true
   },
   {
     "dutch": "geen dank!",
     "spanish": "no hay de que!",
-    "date": "2024-12-29"
+    "date": "2024-12-29",
+    "practiced": true
   },
   {
     "dutch": "geen moeite",
     "spanish": "de nada",
-    "date": "2024-12-29"
+    "date": "2024-12-29",
+    "practiced": true
   }
 ]
