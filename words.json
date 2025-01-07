@@ -9,19 +9,19 @@
     "dutch": "jij inf",
     "spanish": "tu",
     "date": "2024-12-28",
-    "practiced": false
+    "practiced": true
   },
   {
     "dutch": "hij",
     "spanish": "el",
     "date": "2024-12-28",
-    "practiced": false
+    "practiced": true
   },
   {
     "dutch": "zij enk v",
     "spanish": "ella",
     "date": "2024-12-28",
-    "practiced": true
+    "practiced": false
   },
   {
     "dutch": "u enkl for",
@@ -33,7 +33,7 @@
     "dutch": "wij m",
     "spanish": "nosotros",
     "date": "2024-12-28",
-    "practiced": false
+    "practiced": true
   },
   {
     "dutch": "wij v",
@@ -45,7 +45,7 @@
     "dutch": "jullie v inf",
     "spanish": "vosotras",
     "date": "2024-12-28",
-    "practiced": true
+    "practiced": false
   },
   {
     "dutch": "jullie m inf",
@@ -69,7 +69,7 @@
     "dutch": "zij v mv",
     "spanish": "ellas",
     "date": "2024-12-28",
-    "practiced": true
+    "practiced": false
   },
   {
     "dutch": "Dag!",
@@ -87,7 +87,7 @@
     "dutch": "Goedemiddag",
     "spanish": "buenas tardes",
     "date": "2024-12-28",
-    "practiced": true
+    "practiced": false
   },
   {
     "dutch": "Goedenavond",
@@ -99,7 +99,7 @@
     "dutch": "Dag zeggen",
     "spanish": "Decir hola",
     "date": "2024-12-28",
-    "practiced": false
+    "practiced": true
   },
   {
     "dutch": "Groeten (het)",
